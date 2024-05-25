@@ -44,7 +44,7 @@ export default function App() {
 
    }
 
-   function handleClick(e: Event) {
+   function handleClick(e: unknown) {
 
    }
 
