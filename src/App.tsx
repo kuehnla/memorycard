@@ -1,38 +1,56 @@
-import { useState } from 'react'
+import { useEffect, useState, useMemo, useRef } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import Card from './Card'
-import { PokemonClient } from 'pokenode-ts';
+import Cards from './Cards.container'
 
 export default function App() {
-  const names: Array<string> = ["luxray", "machop", "squirtle", "pikachu", "magnemite", "magikarp", "geodude", "diglett", "gengar", "mewtwo"];
-  const pokemon: Array<Pokemon> = [];
 
-  (async () => {
-    const api = new PokemonClient();
+   const names: Array<string> = useMemo(() => createNames(), []);
+   function createNames() {
+      return ["luxray", "machop", "squirtle", "pikachu", "magnemite", "magikarp", "geodude", "diglett", "gengar", "mewtwo"];
+   }
 
-    try {
-      for (let i = 0; i < names.length; ++i) {
-        pokemon[i] = await api.getPokemonByName(names[i]);
-        console.log(pokemon[i].name);
-        console.log(pokemon[i].sprites.front_default);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  })();
+   const [score, setScore] = useState(0);
+   const [bestScore, setBestScore] = useState(0);
+   interface Card {
+      name: string,
+      img: string,
+      clicked: boolean
+   }
+   const pokemon: Array<Card> = useMemo(() => [], []);
+   const [cards, setCards] = useState<Array<Card>>([]);
 
-  const [score, setScore] = useState(0);
-  const [bestScore, setBestScore] = useState(0);
-  const [cards, setCards] = useState([]);
+   useEffect(() => {
+      const data: Array<Card> = [];
+      names.map(name => {
+         fetch("https://pokeapi.co/api/v2/pokemon/".concat(name))
+            .then(resp => resp.json())
+            .then(
+               (result) => {
+                  data.push({ name: result.name, img: result.sprites.front_default, clicked: false });
+               },
+               (error) => {
+                  console.log(error);
+               }
+            )
+      })
+      setCards(data);
 
-  function handleClick(e) {
-    
-  }
+   }, [pokemon, names]);
+   console.log(cards);
 
-  return (
-    <>
-    </>
-  )
+   function shuffle() {
+
+   }
+
+   function handleClick(e: Event) {
+
+   }
+
+   return (
+      <>
+         <Cards cards={cards} handleClick={handleClick} />
+      </>
+   )
 }
