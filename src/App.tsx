@@ -18,7 +18,6 @@ export default function App() {
       img: string,
       clicked: boolean
    }
-   // const pokemon: Array<Card> = useMemo(() => [], []);
    const [cards, setCards] = useState<Array<unknown>>([]);
 
    useEffect(() => {
