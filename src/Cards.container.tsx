@@ -8,7 +8,7 @@ export default function Cards(
 
   const containerStyle = {
     display: "flex",
-    
+
   };
 
   return (
