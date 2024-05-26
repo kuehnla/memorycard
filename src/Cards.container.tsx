@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Card from './Card.tsx'
 
 export default function Cards(
@@ -5,15 +6,16 @@ export default function Cards(
   { cards: Array<Card>; handleClick: (e: unknown) => void })
 {
 
-  //handleClick={handleClick} 
-  console.log(cards);
+  const containerStyle = {
+    display: "flex",
+    
+  };
 
   return (
-    <div className="cards">
+    <div style={containerStyle}>
       {cards.map(card => {
         return <Card name={card.name} img={card.img} clicked={card.clicked} handleClick={handleClick} />
       })}
-      random text after cards processing
     </div>
   );
 }

@@ -10,6 +10,7 @@ export default function Card(
       display: "flex",
       boxShadow: "0 0 3px 2px #cec7c759",
       alignItems: "center",
+      flexDirection: "column",
     },
     name: {
       fontSize: "20px",
